@@ -38,7 +38,7 @@ jobs:
 
       - name: Set up Kubeconfig
         run: |
-          mkdir -p ~/.kube
+          mkdir -p ~./kube
           echo "${{ secrets.KUBERNETES_KUBECONFIG }}" | base64 --decode > ~/.kube/config
 
       - name: Configure AWS Credentials
@@ -50,6 +50,7 @@ jobs:
 
       - name: Deploy Manifests to Kubernetes
         run: |
-          kubectl apply -f k8s/deployment.yaml
-          kubectl apply -f k8s/service.yaml
-          kubectl apply -f k8s/ingress.yaml
+          kubectl create namespace starttech --dry-run=client -o yaml | kubectl apply -f -
+          kubectl apply -f k8s/deployment.yaml -n starttech
+          kubectl apply -f k8s/service.yaml -n starttech
+          kubectl apply -f k8s/ingress.yaml -n starttech
