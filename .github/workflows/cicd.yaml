@@ -41,6 +41,13 @@ jobs:
         mkdir -p ~/.kube
         echo "${{ secrets.KUBERNETES_KUBECONFIG }}" | base64 --decode > ~/.kube/config
 
+      - name: Configure AWS Credentials
+      uses: aws-actions/configure-aws-credentials@v4
+      with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-region: eu-north-1
+        
     - name: Deploy Manifests to Kubernetes
       run: |
         kubectl apply -f k8s/deployment.yaml
