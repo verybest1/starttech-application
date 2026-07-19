@@ -38,7 +38,7 @@ jobs:
 
       - name: Set up Kubeconfig
         run: |
-          mkdir -p ~./kube
+          mkdir -p ~/.kube
           echo "${{ secrets.KUBERNETES_KUBECONFIG }}" | base64 --decode > ~/.kube/config
 
       - name: Configure AWS Credentials
